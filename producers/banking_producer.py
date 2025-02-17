@@ -1,8 +1,16 @@
 import json
-from confluent_kafka import Producer
+import logging
 import random
 import time
 import uuid
+from confluent_kafka import Producer
+
+# Configure logging
+logging.basicConfig(
+    filename="banking_producer.log",  # Log file
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 # Kafka Producer Configuration
 conf = {
@@ -15,10 +23,14 @@ producer = Producer(conf)
 def validate_transaction(transaction):
     """Ensure transaction data is valid."""
     if 'amount' not in transaction or not isinstance(transaction['amount'], (float, int)):
-        print(f"Error: Invalid amount in transaction: {transaction}")
+        error_message = f"Invalid amount in transaction: {transaction}"
+        print(error_message)
+        logging.error(error_message)
         return False
     if 'transaction_type' not in transaction or transaction['transaction_type'] not in ['deposit', 'withdraw', 'low_balance']:
-        print(f"Error: Invalid transaction type in transaction: {transaction}")
+        error_message = f"Invalid transaction type in transaction: {transaction}"
+        print(error_message)
+        logging.error(error_message)
         return False
     return True
 
@@ -28,6 +40,7 @@ def produce_transaction(transaction):
     if validate_transaction(transaction):
         producer.produce('bank_alerts', json.dumps(transaction).encode('utf-8'))
         producer.flush()  # Ensure the message is sent
+        logging.info(f"Produced transaction: {transaction}")
 
 # Function to simulate generating random transactions
 def generate_transaction():
@@ -50,19 +63,26 @@ def generate_transaction():
 
 # Main loop to simulate transactions being sent to Kafka
 def main():
+    logging.info("Banking Producer started.")
     try:
         while True:
             # Generate a random transaction
             transaction = generate_transaction()
             print(f"Producing transaction: {transaction}")
-            
+            logging.info(f"Generating transaction: {transaction}")
+
             # Send the transaction to Kafka
             produce_transaction(transaction)
             
             # Wait before sending the next transaction
-            time.sleep(4.0)  # Random delay 4 second
+            time.sleep(4.0)  # Random delay 4 seconds
     except KeyboardInterrupt:
         print("Producer interrupted. Exiting...")
+        logging.info("Banking Producer stopped.")
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+    finally:
+        producer.flush()
 
 # Run the producer
 if __name__ == "__main__":
