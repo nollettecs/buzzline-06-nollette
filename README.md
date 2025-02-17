@@ -1,26 +1,21 @@
-# buzzline-03-case
-
-Streaming data does not have to be simple text.
-Many of us are familiar with streaming video content and audio (e.g. music) files. 
-
-Streaming data can be structured (e.g. csv files) or
-semi-structured (e.g. json data). 
-
-We'll work with two different types of data, and so we'll use two different Kafka topic names. 
-See [.env](.env). 
+# buzzline-06-nollette
+# Cole Nollette
+- 2/17/25
+- 44-671 Module 6
 
 
-## Task 1. Use Tools from Module 1 and 2
+## Task 1. Use Tools from the previous Modules (2-5) in 44-671
 
 Before starting, ensure you have completed the setup tasks in <https://github.com/denisecase/buzzline-01-case> and <https://github.com/denisecase/buzzline-02-case> first. 
 Python 3.11 is required. 
 
-## Task 2. Copy This Example Project and Rename
+## Task 2. Copy This Example (Buzzline-03-case) Project and Rename
 
-Once the tools are installed, copy/fork this project into your GitHub account
+- Once the tools are installed, copy/fork this project into your GitHub account
 and create your own version of this project to run and experiment with.
-Name it `buzzline-03-yourname` where yourname is something unique to you.
-Follow the instructions in [FORK-THIS-REPO.md](https://github.com/denisecase/buzzline-01-case/blob/main/docs/FORK-THIS-REPO.md).
+
+- Name it `buzzline-06-yourname` where yourname is something unique to you
+- https://github.com/denisecase/buzzline-03-case
     
 
 ## Task 3. Manage Local Project Virtual Environment
