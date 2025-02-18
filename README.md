@@ -16,6 +16,32 @@ This project implements a Kafka-based event streaming system to simulate banking
 
 The system is designed to work in real-time, leveraging Kafka for message queuing and Python for data processing and visualization.
 
+1. Transaction Type Distribution
+
+    - Tracks and visualizes different types of banking transactions (deposits, withdrawals, low balance alerts, etc.).
+    - Helps in identifying which transaction types occur most frequently.
+
+2. Real-Time Trend of Transaction Amounts
+
+    - A line graph shows the trend of transaction amounts over time.
+    - Useful for detecting patterns, spikes, or anomalies in banking activity.
+
+3. High-Alert Notifications (Low Balance Warnings)
+
+    - Detects low balance transactions and raises immediate alerts.
+    - Can be expanded for fraud detection or customer notifications.
+
+4. Streaming Data Processing with Kafka
+
+    - Demonstrates real-time data ingestion and processing.
+    - Efficiently handles high-throughput banking messages.
+
+5. Consumer-Producer Architecture
+
+    - Simulates how banking transactions are produced and consumed in a scalable environment.
+    - Lays the foundation for implementing machine learning models or anomaly detection in banking data.
+
+
 ---
 
 ## 1. Prerequisites
