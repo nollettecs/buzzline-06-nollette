@@ -1,120 +1,169 @@
-# buzzline-06-nollette
-# Cole Nollette
-- 2/17/25
-- 44-671 Module 6
+# Buzzline-06-Nollette
 
+## Author: Cole Nollette
 
-## Task 1. Use Tools from the previous Modules (2-5) in 44-671
+- **Date:** 2/17/25
+- **Course:** 44-671 Module 6
 
-Before starting, ensure you have completed the setup tasks in <https://github.com/denisecase/buzzline-01-case> and <https://github.com/denisecase/buzzline-02-case> first. 
-Python 3.11 is required. 
+---
 
-## Task 2. Copy This Example (Buzzline-03-case) Project and Rename
+## Overview
 
-- Once the tools are installed, copy/fork this project into your GitHub account
-and create your own version of this project to run and experiment with.
+This project implements a Kafka-based event streaming system to simulate banking transactions. It includes:
 
-- Name it `buzzline-06-yourname` where yourname is something unique to you
-- https://github.com/denisecase/buzzline-03-case
-    
+- **Producer:** Generates and sends realistic banking alerts (e.g., deposits, withdrawals, low balance, etc. warnings) to a Kafka topic.
+- **Consumer:** Listens for banking alerts, processes them, filters and sends necessary high-alert messages, and visualizes transaction trends using bar and line charts.
 
-## Task 3. Manage Local Project Virtual Environment
+The system is designed to work in real-time, leveraging Kafka for message queuing and Python for data processing and visualization.
 
-Follow the instructions in [MANAGE-VENV.md](https://github.com/denisecase/buzzline-01-case/blob/main/docs/MANAGE-VENV.md) to:
-1. Create your .venv
-2. Activate .venv
-3. Install the required dependencies using requirements.txt.
+---
 
-## Task 4. Start Zookeeper and Kafka (2 Terminals)
+## 1. Prerequisites
 
-If Zookeeper and Kafka are not already running, you'll need to restart them.
-See instructions at [SETUP-KAFKA.md] to:
+Before starting, ensure you have completed the setup tasks in:
 
-1. Start Zookeeper Service ([link](https://github.com/denisecase/buzzline-02-case/blob/main/docs/SETUP-KAFKA.md#step-7-start-zookeeper-service-terminal-1))
-2. Start Kafka ([link](https://github.com/denisecase/buzzline-02-case/blob/main/docs/SETUP-KAFKA.md#step-8-start-kafka-terminal-2))
+- [Buzzline-01-Case](https://github.com/denisecase/buzzline-01-case)
+- [Buzzline-02-Case](https://github.com/denisecase/buzzline-02-case)
 
-## Task 5. Start a JSON Producer
+**Requirements:**
 
-In VS Code, open a terminal.
-Use the commands below to activate .venv, and start the producer. 
+- Python 3.11
+- Kafka installed and running
+- Required dependencies installed (via `requirements.txt`)
 
-Windows:
+---
 
-```shell
-.venv\Scripts\activate
-py -m producers.json_producer_case
+## 2. Setting Up the Project
+
+### a. Clone and Set Up Virtual Environment
+
+1. Clone this repository.
+2. Navigate into the project folder.
+3. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Mac/Linux
+   .venv\Scripts\activate    # Windows
+   ```
+4. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+---
+
+## 3. Starting Kafka Services
+
+Ensure **Zookeeper** and **Kafka** are running.
+
+### a. Start Zookeeper (Terminal 1)
+
+```bash
+bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m producers.json_producer_case
+``` brew services start zookeeper```
+
+### b. Start Kafka (Terminal 2)
+
+```bash
+bin/kafka-server-start.sh config/server.properties
 ```
 
-What did we name the topic used with JSON data? 
-Hint: See the producer code and [.env](.env).
+``` brew services start kafka```
 
-## Task 6. Start a JSON Consumer
+---
 
-Consumers process streaming data in real time.
+## 4. Running the Kafka Producer
 
-In VS Code, open a NEW terminal in your root project folder. 
-Use the commands below to activate .venv, and start the consumer. 
+The producer generates simulated banking transactions and sends them to Kafka.
 
-Windows:
-```shell
-.venv\Scripts\activate
-py -m consumers.json_consumer_case
+### a. Start the Producer (Terminal 3)
+
+```bash
+source .venv/bin/activate  # Activate environment
+python3 -m producers.bank_producer  # Start producer
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m consumers.json_consumer_case
+### Producer Functionality
+
+- Sends randomly generated banking transactions.
+- Includes transaction types: `deposit`, `withdraw`, `low_balance`, `current_balance`, `checking_account`, and `savings_account`.
+- Publishes these messages to the Kafka topic `bank_alerts`.
+- Sends all messages to the `banking_producer.log`
+
+---
+
+## 5. Running the Kafka Consumer
+
+The consumer listens for messages, processes transactions, filters alerts, and visualizes trends.
+
+### a. Start the Consumer (Terminal 4)
+
+```bash
+source .venv/bin/activate  # Activate environment
+python3 -m consumers.bank_consumer  # Start consumer
 ```
 
-What did we name the topic used with JSON data? 
-Hint: See the consumer code and [.env](.env).
+### Consumer Functionality
 
-## Task 7. Start a CSV Producer
+- **Processes Transactions**
+  - Listens to the Kafka topic `bank_alerts`.
+  - Extracts transaction type and amount from messages.
+- **Filters High-Alert Messages**
+  - Detects `low_balance` transactions and logs a high-alert warning and sends this to `banking_consumer.log`.
+- **Real-Time Visualization**
+  - **Bar Chart:** Displays transaction type distribution with dynamic updates.
+  - **Line Graph:** Tracks transaction amount trends over time.
 
-Follow a similar process to start the csv producer. 
-You will need to:
-1. Open a new terminal. 
-2. Activate your .venv.
-3. Know the command that works on your machine to execute python (e.g. py or python3).
-4. Know how to use the -m (module flag to run your file as a module).
-5. Know the full name of the module you want to run. Hint: Look in the producers folder.
+---
 
-What did we name the topic used with csv data? 
-Hint: See the producer code and [.env](.env).
+## 6. Visualization Features
 
-## Task 8. Start a CSV Consumer
+- **Bar Chart:** Shows the count of different transaction types.
+- **Line Chart:** Plots the transaction amounts over time.
+- **Logging:** Captures `low_balance` alerts in both console output and `logs.banking_consumer.log`. Also captures all messages in `logs.banking_producer.log`
 
-Follow a similar process to start the csv consumer. 
-You will need to:
-1. Open a new terminal. 
-2. Activate your .venv.
-3. Know the command that works on your machine to execute python (e.g. py or python3).
-4. Know how to use the -m (module flag to run your file as a module).
-5. Know the full name of the module you want to run. Hint: Look in the consumers folder.
+---
 
-What did we name the topic used with csv data? 
-Hint: See the consumer code and [.env](.env).
+## 7. Stopping Services
 
-## Later Work Sessions
-When resuming work on this project:
-1. Open the folder in VS Code. 
-2. Start the Zookeeper service.
-3. Start the Kafka service.
-4. Activate your local project virtual environment (.env).
+To stop services, use:
 
-## Save Space
-To save disk space, you can delete the .venv folder when not actively working on this project.
-You can always recreate it, activate it, and reinstall the necessary packages later. 
-Managing Python virtual environments is a valuable skill. 
+```bash
+Ctrl+C  # Stop producer or consumer
+bin/kafka-server-stop.sh  # Stop Kafka
+bin/zookeeper-server-stop.sh  # Stop Zookeeper
+```
+``` brew services stop zookeeper ```
+``` brew services stop kafka```
+
+---
+
+## 8. Managing Virtual Environment
+
+When resuming work:
+
+1. Navigate to project folder.
+2. Reactivate the virtual environment.
+3. Restart Zookeeper and Kafka services.
+4. Start the producer and consumer.
+
+To save space, delete `.venv` when not in use and recreate it later.
+
+---
 
 ## License
-This project is licensed under the MIT License as an example project. 
-You are encouraged to fork, copy, explore, and modify the code as you like. 
-See the [LICENSE](LICENSE.txt) file for more.
+
+This project is licensed under the MIT License. Feel free to fork, modify, and experiment.
+
+---
+
+## Notes
+
+- Ensure Kafka is running before starting producer/consumer.
+- Keep logs organized in `logs/`.
+- Adjust transaction generation rates in `bank_producer.py` as needed.
+
+This README provides a detailed guide to understanding and running the banking transaction Kafka pipeline. 🚀
+
