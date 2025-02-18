@@ -45,7 +45,7 @@ def produce_transaction(transaction):
 # Function to simulate generating random transactions
 def generate_transaction():
     """Generate a random banking transaction."""
-    transaction_types = ['deposit', 'withdraw', 'low_balance']
+    transaction_types = ['deposit', 'withdraw', 'low_balance', 'current_balance', 'checking_account', 'savings_account']
     transaction_type = random.choice(transaction_types)
     amount = round(random.uniform(10.0, 1000.0), 2)  # Generate a random amount between 10 and 1000
     
@@ -75,7 +75,7 @@ def main():
             produce_transaction(transaction)
             
             # Wait before sending the next transaction
-            time.sleep(4.0)  # Random delay 4 seconds
+            time.sleep(3.0)  # Random delay 3 seconds
     except KeyboardInterrupt:
         print("Producer interrupted. Exiting...")
         logging.info("Banking Producer stopped.")
