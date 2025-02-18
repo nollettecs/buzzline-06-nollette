@@ -1,15 +1,20 @@
 import json
+import os
 import logging
 import random
 import time
 import uuid
 from confluent_kafka import Producer
 
-# Configure logging
+# Ensure the logs directory exists
+log_directory = "logs"
+os.makedirs(log_directory, exist_ok=True)  # Create logs directory if it doesn't exist
+
 logging.basicConfig(
-    filename="banking_producer.log",  # Log file
+    filename=os.path.join(log_directory, "banking_producer.log"),  # Store in logs folder
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    force=True  # Ensure logging is properly configured
 )
 
 # Kafka Producer Configuration
