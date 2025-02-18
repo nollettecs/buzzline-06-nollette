@@ -102,23 +102,6 @@ You will need to:
 What did we name the topic used with csv data? 
 Hint: See the consumer code and [.env](.env).
 
-## About the Smart Smoker (CSV Example)
-
-A food stall occurs when the internal temperature of food plateaus or 
-stops rising during slow cooking, typically between 150°F and 170°F. 
-This happens due to evaporative cooling as moisture escapes from the 
-surface of the food. The plateau can last for hours, requiring 
-adjustments like wrapping the food or raising the cooking temperature to 
-overcome it. Cooking should continue until the food reaches the 
-appropriate internal temperature for safe and proper doneness.
-
-The producer simulates a smart food thermometer, sending a temperature 
-reading every 15 seconds. The consumer monitors these messages and 
-maintains a time window of the last 5 readings. 
-If the temperature varies by less than 2 degrees, the consumer alerts 
-the BBQ master that a stall has been detected. This time window helps 
-capture recent trends while filtering out minor fluctuations.
-
 ## Later Work Sessions
 When resuming work on this project:
 1. Open the folder in VS Code. 
