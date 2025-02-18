@@ -41,6 +41,7 @@ The system is designed to work in real-time, leveraging Kafka for message queuin
     - Simulates how banking transactions are produced and consumed in a scalable environment.
     - Lays the foundation for implementing machine learning models or anomaly detection in banking data.
 
+![alt text](image.png)
 
 ---
 
