@@ -27,7 +27,7 @@ def validate_transaction(transaction):
         print(error_message)
         logging.error(error_message)
         return False
-    if 'transaction_type' not in transaction or transaction['transaction_type'] not in ['deposit', 'withdraw', 'low_balance']:
+    if 'transaction_type' not in transaction or transaction['transaction_type'] not in ['deposit', 'withdraw', 'low_balance', 'current_balance', 'checking_account', 'savings_account']:
         error_message = f"Invalid transaction type in transaction: {transaction}"
         print(error_message)
         logging.error(error_message)

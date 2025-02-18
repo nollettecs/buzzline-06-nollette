@@ -20,7 +20,7 @@ transaction_counts = defaultdict(int)
 # Function to update and display the bar chart
 def update_chart():
     plt.clf()  # Clear the previous plot
-    plt.bar(transaction_counts.keys(), transaction_counts.values(), color=['blue', 'red', 'orange'])
+    plt.bar(transaction_counts.keys(), transaction_counts.values(), color=['blue', 'red', 'orange', 'green', 'purple'])
     plt.xlabel("Transaction Type")
     plt.ylabel("Count")
     plt.title("Transaction Type Distribution")
