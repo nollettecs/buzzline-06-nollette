@@ -81,6 +81,8 @@
 pip
 setuptools
 wheel
+confluent-kafka
+matplotlib
 
 # Easy logging for monitoring code execution
 loguru

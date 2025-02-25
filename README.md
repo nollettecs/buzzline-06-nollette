@@ -109,7 +109,7 @@ The producer generates simulated banking transactions and sends them to Kafka.
 
 ```bash
 source .venv/bin/activate  # Activate environment
-python3 -m producers.bank_producer  # Start producer
+python3 -m producers.banking_producer  # Start producer
 ```
 
 ### Producer Functionality
@@ -129,7 +129,7 @@ The consumer listens for messages, processes transactions, filters alerts, and v
 
 ```bash
 source .venv/bin/activate  # Activate environment
-python3 -m consumers.bank_consumer  # Start consumer
+python3 -m consumers.banking_consumer  # Start consumer
 ```
 
 ### Consumer Functionality
